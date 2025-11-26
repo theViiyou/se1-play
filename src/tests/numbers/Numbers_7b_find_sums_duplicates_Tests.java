@@ -31,12 +31,12 @@ public class Numbers_7b_find_sums_duplicates_Tests {
         this.testObj = Numbers.getInstance();
     }
 
-    // @Test @Order(710)
-    // void test710_find_sums_duplicates() {
-    //     var actual = testObj.findSums(n10, 6);
-    //     int[][] expected = {{1, 5}};    // or {5, 1}, both match
-    //     assertTrue(Matchers.matchIgnoreOrder(expected, actual));
-    // }
+    @Test @Order(710)
+    void test710_find_sums_duplicates() {
+        var actual = testObj.findSums(n10, 6);
+        int[][] expected = {{1, 5}};    // or {5, 1}, both match
+        assertTrue(Matchers.matchIgnoreOrder(expected, actual));
+    }
 
     @Test @Order(711)
     void test711_find_sums_same_duplicates() {
@@ -45,17 +45,17 @@ public class Numbers_7b_find_sums_duplicates_Tests {
         assertTrue(Matchers.matchIgnoreOrder(expected, actual));
     }
 
-    // @Test @Order(712)
-    // void test712_find_sums_mirror_duplicates() {
-    //     var actual = testObj.findSums(n12, 6);
-    //     int[][] expected = {{1, 5}, {3, 3}};
-    //     assertTrue(Matchers.matchIgnoreOrder(expected, actual));
-    // }
+    @Test @Order(712)
+    void test712_find_sums_mirror_duplicates() {
+        var actual = testObj.findSums(n12, 6);
+        int[][] expected = {{1, 5}, {3, 3}};
+        assertTrue(Matchers.matchIgnoreOrder(expected, actual));
+    }
 
-    // @Test @Order(713)
-    // void test713_find_sums_regular_duplicates() {
-    //     var actual = testObj.findSums(n13, 6);
-    //     int[][] expected = {{1, 5}, {3, 3}, {2, 4}};
-    //     assertTrue(Matchers.matchIgnoreOrder(expected, actual));
-    // }
+    @Test @Order(713)
+    void test713_find_sums_regular_duplicates() {
+        var actual = testObj.findSums(n13, 6);
+        int[][] expected = {{1, 5}, {3, 3}, {2, 4}};
+        assertTrue(Matchers.matchIgnoreOrder(expected, actual));
+    }
 }

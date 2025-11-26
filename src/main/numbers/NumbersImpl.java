@@ -114,7 +114,7 @@ class NumbersImpl implements Numbers {
                 return i;
             }
         }
-        return -1;  // x not found
+        return -1; // x not found
 
         /*
          * Alternative mit Streams:
@@ -125,7 +125,7 @@ class NumbersImpl implements Numbers {
          */
     }
 
-    @Override // 5  (-2, 4, 9, 4, -3, 4, 9, 5) 4
+    @Override // 5 (-2, 4, 9, 4, -3, 4, 9, 5) 4
     public int findLast(int[] numbers, int x) {
         if (numbers == null) {
             throw new IllegalArgumentException("illegal argument: null");
@@ -178,25 +178,45 @@ class NumbersImpl implements Numbers {
         for (int i = 0; i < numbers.length; i++) {
             for (int j = i + 1; j < numbers.length; j++) {
                 if (numbers[i] + numbers[j] == sum) {
-                    result.add(new Pair(numbers[i], numbers[j]));
+                    result.add(new Pair(Math.min(numbers[i], numbers[j]), 
+                            Math.max(numbers[i], numbers[j])));
                 }
             }
         }
         return result; // Dummy-Implementierung
     }
 
-    @Override // 8
+    // Numbers_8
+    @Override
     public Set<Set<Integer>> findAllSums(int[] numbers, int sum) {
         if (numbers == null) {
             throw new IllegalArgumentException("illegal argument: null");
         }
 
-        return Set.of(); // Dummy-Implementierung
-
-        /*
-         * Alternative mit Streams:
-         * TODO implementieren
-         */
+        Set<Set<Integer>> result = new HashSet<>();
+        backtrack(numbers, 0, sum, new HashSet<>(), result);
+        return result;
+        // return powerSetBruteForce(numbers, sum);
     }
 
+    private void backtrack(int[] numbers, int index, int remaining,
+            Set<Integer> current, Set<Set<Integer>> result) {
+
+        if (remaining == 0) {
+            result.add(new HashSet<>(current));
+            return;
+        }
+
+        if (index >= numbers.length || remaining < 0) {
+            return;
+        }
+
+        // Zahl nehmen
+        current.add(numbers[index]);
+        backtrack(numbers, index + 1, remaining - numbers[index], current, result);
+
+        // Zahl nicht nehmen
+        current.remove(numbers[index]);
+        backtrack(numbers, index + 1, remaining, current, result);
+    }
 }

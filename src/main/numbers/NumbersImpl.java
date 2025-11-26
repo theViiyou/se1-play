@@ -1,6 +1,7 @@
 package numbers;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -36,10 +37,20 @@ class NumbersImpl implements Numbers {
     @Override // 1
     public long sum(int[] numbers) {
         long summe = 0;
+        if (numbers == null) {
+            throw new IllegalArgumentException("illegal argument: null");
+        }
         for (int i = 0; i < numbers.length; i++) {
             summe += numbers[i];
         }
         return summe;
+
+        /*
+         * Alternative mit Streams:
+         * return Arrays.stream(numbers)
+         * .asLongStream()
+         * .sum();
+         */
     }
 
     @Override // 2
@@ -54,6 +65,14 @@ class NumbersImpl implements Numbers {
             }
         }
         return summe;
+
+        /*
+         * Alternative mit Streams:
+         * return Arrays.stream(numbers)
+         * .filter(n -> n > 0 && n % 2 == 0)
+         * .asLongStream()
+         * .sum();
+         */
     }
 
     @Override // 3
@@ -66,6 +85,17 @@ class NumbersImpl implements Numbers {
             summe = numbers[i] + (int) sum_recursive(numbers, i + 1);
         }
         return summe;
+
+        // return i<0 || i>=numbers.length ? 0L : numbers[i] + sum_recursive(numbers,
+        // i+1);
+
+        /*
+         * Alternative mit Streams:
+         * return IntStream.range(i, numbers.length)
+         * .map(n -> numbers[n])
+         * .asLongStream()
+         * .sum();
+         */
     }
 
     /*
@@ -79,28 +109,42 @@ class NumbersImpl implements Numbers {
         if (numbers == null) {
             throw new IllegalArgumentException("illegal argument: null");
         }
-        long len = numbers.length;
-
-        for (int i = 0; i < len; i++) {
+        for (int i = 0; i < numbers.length; i++) {
             if (numbers[i] == x) {
                 return i;
             }
         }
-        return -1;
+        return -1;  // x not found
+
+        /*
+         * Alternative mit Streams:
+         * return IntStream.range(0, numbers.length)
+         * .filter(i -> numbers[i] == x)
+         * .findFirst()
+         * .orElse(-1);
+         */
     }
 
-    @Override // 5
+    @Override // 5  (-2, 4, 9, 4, -3, 4, 9, 5) 4
     public int findLast(int[] numbers, int x) {
         if (numbers == null) {
             throw new IllegalArgumentException("illegal argument: null");
         }
-        int len = numbers.length;
-        for (int i = len - 1; i >= 0; i--) {
+        int result = -1;
+        for (int i = numbers.length - 1; i >= 0; i--) {
             if (numbers[i] == x) {
-                return i;
+                return result = i;
             }
         }
-        return -1; // x not found
+        return result; // x not found
+
+        /*
+         * Alternative mit Streams:
+         * return IntStream.iterate(numbers.length - 1, i -> i >= 0, i -> i - 1)
+         * .filter(i -> numbers[i] == x)
+         * .findFirst()
+         * .orElse(-1);
+         */
     }
 
     @Override // 6
@@ -115,16 +159,44 @@ class NumbersImpl implements Numbers {
             }
         }
         return indices; // empty list if x not found
+
+        /*
+         * Alternative mit Streams:
+         * return IntStream.range(0, numbers.length)
+         * .filter(i -> numbers[i] == x)
+         * .boxed()
+         * .collect(Collectors.toList());
+         */
     }
 
     @Override // 7
     public Set<Pair> findSums(int[] numbers, int sum) {
-        return Set.of(); // Dummy-Implementierung
+        if (numbers == null) {
+            throw new IllegalArgumentException("illegal argument: null");
+        }
+        Set<Pair> result = new HashSet<>();
+        for (int i = 0; i < numbers.length; i++) {
+            for (int j = i + 1; j < numbers.length; j++) {
+                if (numbers[i] + numbers[j] == sum) {
+                    result.add(new Pair(numbers[i], numbers[j]));
+                }
+            }
+        }
+        return result; // Dummy-Implementierung
     }
 
     @Override // 8
     public Set<Set<Integer>> findAllSums(int[] numbers, int sum) {
+        if (numbers == null) {
+            throw new IllegalArgumentException("illegal argument: null");
+        }
+
         return Set.of(); // Dummy-Implementierung
+
+        /*
+         * Alternative mit Streams:
+         * TODO implementieren
+         */
     }
 
 }
